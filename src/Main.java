@@ -6,10 +6,19 @@ import entity.Corso;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import config.DatabaseConfig;
+import java.sql.Connection;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+        Connection conn = DatabaseConfig.getConnection();
+
+        if (conn != null) {
+            System.out.println("✅ Connessione al database riuscita!");
+        } else {
+            System.out.println("❌ Connessione fallita.");
+        }
+        /*Scanner sc = new Scanner(System.in);
 
         ArrayList<Docente> docenti = new ArrayList<>();
         ArrayList<Discente> discenti = new ArrayList<>();
@@ -87,7 +96,7 @@ public class Main {
         System.out.println("\n--- CORSI INSERITI ---");
         for (Corso corso : corsi) {
             System.out.println(corso);
-        }
+        }*/
 
 
     }
