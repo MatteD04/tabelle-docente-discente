@@ -8,17 +8,19 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import config.DatabaseConfig;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class Main {
     public static void main(String[] args) {
-        Connection conn = DatabaseConfig.getConnection();
+        //Connection conn = DatabaseConfig.getConnection();
 
-        if (conn != null) {
+        /*if (conn != null) {
             System.out.println("✅ Connessione al database riuscita!");
         } else {
             System.out.println("❌ Connessione fallita.");
-        }
-        /*Scanner sc = new Scanner(System.in);
+        }*/
+        Scanner sc = new Scanner(System.in);
 
         ArrayList<Docente> docenti = new ArrayList<>();
         ArrayList<Discente> discenti = new ArrayList<>();
@@ -28,19 +30,41 @@ public class Main {
         int nDocenti = sc.nextInt();
         sc.nextLine();
 
-        for (int i=0; i< nDocenti; i++){
-            System.out.println("Inserisci ID:");
-            int id = sc.nextInt(); sc.nextLine();
-            System.out.println("Inserisci nome:");
-            String nome = sc.nextLine();
-            System.out.println("Inserisci cognome:");
-            String cognome = sc.nextLine();
-            System.out.println("inserisci data di dascita");
-            String data_nascita = sc.nextLine();
+        try (Connection conn = DatabaseConfig.getConnection()) {
+            if (conn != null){
+                for (int i=0; i< nDocenti; i++){
+                    System.out.println("Inserisci ID:");
+                    int id = sc.nextInt(); sc.nextLine();
+                    System.out.println("Inserisci nome:");
+                    String nome = sc.nextLine();
+                    System.out.println("Inserisci cognome:");
+                    String cognome = sc.nextLine();
+                    System.out.println("inserisci data di dascita");
+                    String data_nascita = sc.nextLine();
+                    java.sql.Date data_nascitaSQL = java.sql.Date.valueOf(data_nascita);
 
-            Docente d = new Docente(id, nome, cognome, data_nascita);
-            docenti.add(d);
-        };
+                    Docente d = new Docente(id, nome, cognome, data_nascita);
+                    docenti.add(d);
+
+                    String sql = "INSERT INTO docente (id, nome, cognome, data_nascita) VALUES (?, ?, ?, ?)";
+                    PreparedStatement stmt = conn.prepareStatement(sql);
+
+                    stmt.setInt(1, id);               // ID inserito manualmente
+                    stmt.setString(2, nome);          // Nome
+                    stmt.setString(3, cognome);       // Cognome
+                    stmt.setDate(4, data_nascitaSQL);  // Data di nascita
+
+                    stmt.executeUpdate();
+                    stmt.close();
+
+                    System.out.println("✅ Inserito nel database: " + nome + " " + cognome);
+                }
+            }else {
+                System.out.println("❌ Connessione al database fallita.");
+            }
+        } catch (SQLException e) {
+            System.out.println("❌ Errore durante l'inserimento: " + e.getMessage());
+        }
 
         System.out.println("\n--- DOCENTI INSERITI ---");
         for (Docente d : docenti) {
@@ -96,7 +120,7 @@ public class Main {
         System.out.println("\n--- CORSI INSERITI ---");
         for (Corso corso : corsi) {
             System.out.println(corso);
-        }*/
+        }
 
 
     }
