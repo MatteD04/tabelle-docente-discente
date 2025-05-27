@@ -4,13 +4,13 @@ public class Discente {
     private int id;
     private String nome;
     private String cognome;
-    private String matricola;
+    private int matricola;
     private int eta;
     private String citta_residenza;
 
     public Discente() {}
 
-    public Discente(int id, String nome, String cognome, String matricola, int eta, String citta_residenza) {
+    public Discente(int id, String nome, String cognome, int matricola, int eta, String citta_residenza) {
         this.id = id;
         this.nome = nome;
         this.cognome = cognome;
@@ -31,7 +31,7 @@ public class Discente {
         return cognome;
     }
 
-    public String getMatricola() {
+    public int getMatricola() {
         return matricola;
     }
 
@@ -55,7 +55,7 @@ public class Discente {
         this.cognome = cognome;
     }
 
-    public void setMatricola(String matricola) {
+    public void setMatricola(int matricola) {
         this.matricola = matricola;
     }
 

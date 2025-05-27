@@ -88,7 +88,7 @@ public class Main {
                     System.out.println("Inserisci cognome:");
                     String cognome = sc.nextLine();
                     System.out.println("inserisci matricola");
-                    String matricola = sc.nextLine();
+                    int matricola = sc.nextInt(); sc.nextLine();
                     System.out.println("Inserisci eta:");
                     int eta = sc.nextInt(); sc.nextLine();
                     System.out.println("inserisci citta_residenza");
@@ -104,14 +104,14 @@ public class Main {
                     stmt.setInt(1, id);
                     stmt.setString(2, nome);
                     stmt.setString(3, cognome);
-                    stmt.setString(4, matricola);
+                    stmt.setInt(4, matricola);
                     stmt.setInt(5, eta);
                     stmt.setString(6, citta_residenza);
 
                     stmt.executeUpdate();
                     stmt.close();
 
-                    System.out.println(" Inserito nel database: " + nome + " " + cognome + " (" + " ) " + "di " + citta_residenza);
+                    System.out.println(" Inserito nel database: " + nome + " " + cognome + " ( " + matricola + " ) " + "di " + citta_residenza);
                 }
             }else {
                 System.out.println(" Connessione al database fallita.");
